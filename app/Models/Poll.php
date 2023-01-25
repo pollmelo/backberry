@@ -12,7 +12,7 @@ class Poll extends Model
     protected $fillable = [
         'name',
         'description',
-        'end-date',
+        'end_date',
         'phase',
     ];
 }
