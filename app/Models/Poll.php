@@ -15,4 +15,9 @@ class Poll extends Model
         'end_date',
         'phase',
     ];
+
+    public function votes()
+    {
+        return $this->hasMany(Vote::class);
+    }
 }

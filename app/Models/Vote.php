@@ -13,4 +13,9 @@ class Vote extends Model
         'id',
         'description',
     ];
+
+    public function poll()
+    {
+        return $this->belongsTo(Poll::class);
+    }
 }
