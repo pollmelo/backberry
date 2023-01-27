@@ -3,26 +3,32 @@
 namespace Tests\Feature;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
+
 
 class HttpTest extends TestCase
 {
+    use RefreshDatabase;
+
     /**
      * A basic feature test example.
      *
      * @return void
      */
-    public function test_example()
+    public function test_example(): void
     {
-        $testData=[
+
+        $testData = [
             'name' => 'HTTP Test Test',
             'description' => 'This poll was created by the HTTP Test',
             'endDate' => '2023-01-31',
             'phase' => '1'
         ];
-        $response = $this->post('/api/polls/create',$testData);
+        $response = $this->post('/api/polls/create', $testData);
 
-        $response->assertStatus(200);
+        $response->assertCreated();
+        $this->assertDatabaseHas('polls', [
+            'name' => 'HTTP Test Test',
+        ]);
     }
 }
