@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Poll extends Model
 {
@@ -16,7 +17,7 @@ class Poll extends Model
         'phase',
     ];
 
-    public function votes()
+    public function votes(): HasMany
     {
         return $this->hasMany(Vote::class);
     }
