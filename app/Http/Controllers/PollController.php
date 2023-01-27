@@ -7,7 +7,8 @@ use Illuminate\Http\Request;
 
 class PollController extends Controller
 {
-    public function create(Request $request){
+    public function create(Request $request)
+    {
         $name = $request->input('name');
         $description = $request->input('description');
         $endDate = $request->input('endDate');
