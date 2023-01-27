@@ -15,6 +15,6 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::prefix('polls')->group(function () {
-    //
+    Route::post('add', [\App\Http\Controllers\VoteController::class, 'add'])->name('vote.add');
 });
 
