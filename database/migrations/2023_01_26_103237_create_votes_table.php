@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('votes', function (Blueprint $table) {
             $table->id();
             $table->integer('description');
+            $table->foreignId('poll_id')->constrained('polls');
             $table->timestamps();
         });
     }
@@ -27,6 +28,9 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('votes');
+        Schema::table('votes', function (Blueprint $table){
+            $table->dropForeign('votes_poll_id_foreign');
+        }); 
+        Schema::dropIfExists('votes'); 
     }
 };
