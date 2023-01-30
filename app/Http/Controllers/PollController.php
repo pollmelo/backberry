@@ -22,6 +22,6 @@ class PollController extends Controller
         $poll->phase = $phase;
 
         $poll->save();
-        return response()->json($poll,status: 201);
+        return response()->json($poll, status: 201);
     }
 }
