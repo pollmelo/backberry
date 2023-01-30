@@ -24,6 +24,13 @@ class Poll extends Model
         'phase',
     ];
 
+    /**
+     * @var array<string,int> $attributes
+     */
+    protected $attributes = [
+        'phase' => 1,
+    ];
+
     public function votes(): HasMany
     {
         return $this->hasMany(Vote::class);
