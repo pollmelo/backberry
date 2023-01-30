@@ -10,12 +10,7 @@ class HttpTest extends TestCase
 {
     use RefreshDatabase;
 
-    /**
-     * A basic feature test example.
-     *
-     * @return void
-     */
-    public function test_example(): void
+    public function test_create(): void
     {
 
         $testData = [
