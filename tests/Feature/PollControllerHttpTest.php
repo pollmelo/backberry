@@ -6,7 +6,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 
-class HttpTest extends TestCase
+class PollControllerHttpTest extends TestCase
 {
     use RefreshDatabase;
 
