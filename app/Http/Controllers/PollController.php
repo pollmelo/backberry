@@ -11,10 +11,10 @@ class PollController extends Controller
     public function create(Request $request): JsonResponse
     {
         $request->validate([
-            'name' => 'required|max:255|distinct',
+            'name' => 'required|max:255|unique:polls,name',
             'description' => 'required',
             'endDate' => 'required|date|after:today',
-            'phase' => 'nullable|integer|min:1'
+            'phase' => 'nullable|integer|min:1',
         ]);
 
         $name = $request->input('name');
@@ -27,7 +27,7 @@ class PollController extends Controller
         $poll->description = $description;
         $poll->end_date = $endDate;
 
-        if($phase!=null){
+        if ($phase != null) {
             $poll->phase = $phase;
         }
 
