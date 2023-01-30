@@ -83,25 +83,25 @@ class VoteControllerHttpTest extends TestCase
     {
         $dateInFuture = Carbon::now()->addDays(7);
 
-        Poll::create([
-            'name' => 'Should we add tests?',
-            'description' => 'Bla.',
-            'end_date' => $dateInFuture,
-            'phase' => 1,
-        ]);
+        $poll = new Poll();
+        $poll->name = 'Should we add tests?';
+        $poll->description = 'Bla.';
+        $poll->end_date = $dateInFuture;
+        $poll->phase = 1;
+        $poll->save();
 
         $response = $this->post(route('vote.create'), [
-            'poll_id' => 2,
-            'description' => 1,
+            'poll_id' => $poll->id,
+            'description' => $poll->description,
         ]);
 
         $this->assertDatabaseCount('polls', 1);
-        $this->assertDatabaseCount('votes', 1);
         $this->assertDatabaseHas('polls', [
-            'id' => 2
+            'id' => $poll->id
         ]);
+        $this->assertDatabaseCount('votes', 1);
         $this->assertDatabaseHas('votes', [
-            'poll_id' => 2
+            'poll_id' => $poll->id
         ]);
     }
 }
