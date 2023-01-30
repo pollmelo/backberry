@@ -4,3 +4,5 @@ parameters:
     paths:
         - app/
     level: 6
+
+    checkGenericClassInNonGenericObjectType: false
