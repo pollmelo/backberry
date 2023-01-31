@@ -3,9 +3,7 @@
 namespace Tests\Feature;
 
 use App\Models\Poll;
-use DateTime;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Carbon;
 use Tests\TestCase;
 
@@ -19,7 +17,7 @@ class VoteControllerHttpTest extends TestCase
      */
     public function create_accessAsGetRequest_returns405StatusCode(): void
     {
-        $response = $this->get(route('vote.create'));
+        $response = $this->get(route('votes.create'));
 
         $response->assertStatus(405);
     }
@@ -28,28 +26,35 @@ class VoteControllerHttpTest extends TestCase
      * @test
      * @return void
      */
-    public function create_accessAsPostRequestWithoutData_returns500StatusCode(): void
+    public function create_accessAsPostRequestWithoutData_returns422StatusCode(): void
     {
-        $response = $this->post(route('vote.create'));
+        $response = $this->post(route('votes.create'), headers: [
+            'X-Requested-With' => 'XMLHttpRequest',
+            'Accept' => 'application/json',
+        ]);
 
-        $response->assertStatus(500);
+        $response->assertStatus(422);
     }
 
     /**
      * @test
      * @return void
      */
-    public function create_addVoteForNotExistingPoll_returns500StatusCodeAndJsonError(): void
+    public function create_addVoteForNotExistingPoll_returns422StatusCodeAndJsonError(): void
     {
-        $response = $this->post(route('vote.create'), [
-            'poll_id' => 1,
+        $response = $this->post(route('votes.create'), data: [
+            'pollId' => 1,
             'description' => 1
+        ], headers: [
+            'X-Requested-With' => 'XMLHttpRequest',
+            'Accept' => 'application/json',
         ]);
 
         $response->assertJson([
-            'error' => 'Creation failed.',
+            'message' => 'The selected poll id is invalid.',
+            'errors' => ['pollId' => ['The selected poll id is invalid.']],
         ]);
-        $response->assertStatus(500);
+        $response->assertStatus(422);
     }
 
     /**
@@ -67,8 +72,8 @@ class VoteControllerHttpTest extends TestCase
             'phase' => 1,
         ]);
 
-        $response = $this->post(route('vote.create'), [
-            'poll_id' => 1,
+        $response = $this->post(route('votes.create'), [
+            'pollId' => 1,
             'description' => 1,
         ]);
 
@@ -90,9 +95,9 @@ class VoteControllerHttpTest extends TestCase
         $poll->phase = 1;
         $poll->save();
 
-        $response = $this->post(route('vote.create'), [
-            'poll_id' => $poll->id,
-            'description' => $poll->description,
+        $this->post(route('votes.create'), [
+            'pollId' => $poll->id,
+            'description' => 1,
         ]);
 
         $this->assertDatabaseCount('polls', 1);

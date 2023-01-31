@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Carbon;
 use Tests\TestCase;
 
 
@@ -12,11 +13,12 @@ class PollControllerHttpTest extends TestCase
 
     public function test_create(): void
     {
+        $dateInFuture = Carbon::now()->addDays(7);
 
         $testData = [
             'name' => 'HTTP Test Test',
             'description' => 'This poll was created by the HTTP Test',
-            'endDate' => '2023-01-31',
+            'endDate' => $dateInFuture,
             'phase' => '1'
         ];
         $response = $this->post('/api/polls/create', $testData);
