@@ -20,6 +20,6 @@ Route::prefix('polls')->group(function () {
 });
 
 Route::prefix('votes')->group(function () {
-    Route::post('/create', [VoteController::class, 'create'])->name('vote.create');
+    Route::post('/create', [VoteController::class, 'create'])->name('votes.create');
 });
 
