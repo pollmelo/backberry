@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * @property int $poll_id
- * @property int $description
+ * @property bool $description
  */
 class Vote extends Model
 {
