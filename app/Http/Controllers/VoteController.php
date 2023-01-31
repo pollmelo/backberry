@@ -22,7 +22,7 @@ class VoteController extends Controller
 
         $vote = new Vote();
         $vote->poll_id = $pollId;
-        $vote->description = (int)$description;
+        $vote->description = (bool)$description;
         $vote->save();
 
         return response()->json($vote, status: 201);
