@@ -3,28 +3,28 @@
 namespace App\Http\Controllers;
 
 use App\Models\Vote;
-use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use function response;
 
 class VoteController extends Controller
 {
     public function create(Request $request): JsonResponse
     {
-        $pollId = $request->input('poll_id');
+        $request->validate([
+            'description' => 'required|boolean',
+            'pollId' => 'required|exists:polls,id',
+        ]);
+
+        $pollId = $request->input('pollId');
         $description = $request->input('description');
 
-        try {
-            $vote = new Vote();
-            $vote->poll_id = $pollId;
-            $vote->description = (int)$description;
-            $vote->save();
-        } catch (Exception $e) {
-            return \response()->json([
-                'error' => 'Creation failed.',
-            ], status: 500);
-        }
 
-        return \response()->json($vote, status: 201);
+        $vote = new Vote();
+        $vote->poll_id = $pollId;
+        $vote->description = (int)$description;
+        $vote->save();
+
+        return response()->json($vote, status: 201);
     }
 }
