@@ -36,8 +36,20 @@ class PollController extends Controller
         return response()->json($poll, status: 201);
     }
 
-    public function getAll():jsonResponse{
+    public function getAll(): JsonResponse
+    {
         $polls = Poll::all();
-        return response()->json($polls);
+        $pollsWithVotes = [];
+
+        foreach ($polls as $poll) {
+            $votes = Vote::where('poll_id',$poll->id)->get();
+            $upVotes = $votes->where('description',true)->count();
+            $downVotes = $votes->where('description',false)->count();
+            $poll->upvotes = $upVotes;
+            $poll->downvotes = $downVotes;
+
+            $pollsWithVotes[] = $poll;
+        }
+        return response()->json($pollsWithVotes);
     }
 }
