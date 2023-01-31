@@ -39,7 +39,7 @@ class PollController extends Controller
     public function getAll(): JsonResponse
     {
         $polls = Poll::all();
-        $pollsWithVotes = [];
+        $convertedPolls = [];
 
         foreach ($polls as $poll) {
             $votes = Vote::where('poll_id', $poll->id)->get();
@@ -60,6 +60,6 @@ class PollController extends Controller
 
             $convertedPolls[] = $convertedPoll;
         }
-        return response()->json($pollsWithVotes);
+        return response()->json($convertedPolls);
     }
 }
