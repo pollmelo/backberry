@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Models\Poll;
+use App\Models\Vote;
 use Database\Factories\PollFactory;
 use Illuminate\Console\Command;
 
@@ -13,7 +14,7 @@ class Seed extends Command
      *
      * @var string
      */
-    protected $signature = 'seed';
+    protected $signature = 'seed {amountOfPolls=10}';
 
     /**
      * The console command description.
@@ -29,7 +30,13 @@ class Seed extends Command
      */
     public function handle(): int
     {
-        Poll::factory()->count(5)->create();
+        $randCountOfVotes = rand(10, 150);
+
+        Poll::factory()
+            ->count($this->argument("amountOfPolls"))
+            ->has(Vote::factory()->count($randCountOfVotes))
+            ->create();
+
         return Command::SUCCESS;
     }
 }
