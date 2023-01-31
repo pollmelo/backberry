@@ -42,9 +42,9 @@ class PollController extends Controller
         $pollsWithVotes = [];
 
         foreach ($polls as $poll) {
-            $votes = Vote::where('poll_id',$poll->id)->get();
-            $upVotes = $votes->where('description',true)->count();
-            $downVotes = $votes->where('description',false)->count();
+            $votes = Vote::where('poll_id', $poll->id)->get();
+            $upVotes = $votes->where('description', true)->count();
+            $downVotes = $votes->where('description', false)->count();
             $poll->upvotes = $upVotes;
             $poll->downvotes = $downVotes;
 
