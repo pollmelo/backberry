@@ -43,12 +43,22 @@ class PollController extends Controller
 
         foreach ($polls as $poll) {
             $votes = Vote::where('poll_id', $poll->id)->get();
-            $upVotes = $votes->where('description', true)->count();
-            $downVotes = $votes->where('description', false)->count();
-            $poll->upvotes = $upVotes;
-            $poll->downvotes = $downVotes;
+            $upvotes = $votes->where('description', true)->count();
+            $downvotes = $votes->where('description', false)->count();
 
-            $pollsWithVotes[] = $poll;
+            $convertedPoll = [
+                "id" => $poll->id,
+                "name" => $poll->name,
+                "description" => $poll->description,
+                "endDate" => $poll->end_date,
+                "phase" => $poll->phase,
+                "created_at" => $poll->created_at,
+                "updated_at" => $poll->updated_at,
+                "upvotes" => $upvotes,
+                "downvotes" => $downvotes,
+            ];
+
+            $convertedPolls[] = $convertedPoll;
         }
         return response()->json($pollsWithVotes);
     }
