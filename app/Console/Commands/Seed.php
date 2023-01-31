@@ -27,7 +27,7 @@ class Seed extends Command
      *
      * @return int
      */
-    public function handle()
+    public function handle(): int
     {
         Poll::factory()->count(5)->create();
         return Command::SUCCESS;
