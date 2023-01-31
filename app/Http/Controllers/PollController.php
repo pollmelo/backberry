@@ -38,6 +38,6 @@ class PollController extends Controller
     public function getPoll(Request $request, int $id): JsonResponse
     {
         $poll = Poll::find($id);
-        return $poll;
+        return response()->json($poll, status: 200);
     }
 }
