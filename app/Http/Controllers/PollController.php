@@ -51,12 +51,12 @@ class PollController extends Controller
                 "id" => $poll->id,
                 "name" => $poll->name,
                 "description" => $poll->description,
-                "end_date" => $poll->end_date,
+                "endDate" => $poll->end_date,
                 "phase" => $poll->phase,
                 "upvotes" => $upvotes,
                 "downvotes" => $downvotes,
-                "created_at" => $poll->created_at,
-                "updated_at" => $poll->updated_at,
+                "createdAt" => $poll->created_at,
+                "updatedAt" => $poll->updated_at,
             ];
 
             $convertedPolls[] = $convertedPoll;
