@@ -33,7 +33,7 @@ class Seed extends Command
         $randCountOfVotes = rand(10, 150);
 
         Poll::factory()
-            ->count($this->argument("amountOfPolls"))
+            ->count((int)$this->argument("amountOfPolls"))
             ->has(Vote::factory()->count($randCountOfVotes))
             ->create();
 
