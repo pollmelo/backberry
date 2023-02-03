@@ -28,4 +28,36 @@ class PollControllerHttpTest extends TestCase
             'name' => 'HTTP Test Test',
         ]);
     }
+
+    public function test_getAll(): void
+    {
+        $dateInFuture = Carbon::now()->addDays(7);
+
+        $testPoll = [
+            'name' => 'HTTP Test Test',
+            'description' => 'This poll was created by the HTTP Test',
+            'endDate' => $dateInFuture,
+            'phase' => '1'
+        ];
+
+        $testVote = [
+            'description' => '1',
+            'pollId' => '1',
+        ];
+
+        $this->post('/api/polls/create', $testPoll);
+        $this->post('/api/votes/create', $testVote);
+        $this->post('/api/votes/create', $testVote);
+
+        $response = $this->get('/api/polls/all');
+        $response->assertJson([[
+            'id' => 1,
+            'name' => 'HTTP Test Test',
+            'description' => 'This poll was created by the HTTP Test',
+            'phase' => 1,
+            'upvotes' => 2,
+            'downvotes' => 0,
+        ]
+        ]);
+}
 }

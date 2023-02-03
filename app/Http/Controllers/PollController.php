@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Poll;
+use App\Models\Vote;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -32,6 +33,35 @@ class PollController extends Controller
         }
 
         $poll->save();
+
         return response()->json($poll, status: 201);
+    }
+
+    public function getAll(): JsonResponse
+    {
+        $polls = Poll::all();
+        $convertedPolls = [];
+
+        foreach ($polls as $poll) {
+            $votes = $poll->votes();
+            $upvotes = $votes->where('description', true)->count();
+            $downvotes = $votes->where('description', false)->count();
+
+            $convertedPoll = [
+                "id" => $poll->id,
+                "name" => $poll->name,
+                "description" => $poll->description,
+                "endDate" => $poll->end_date,
+                "phase" => $poll->phase,
+                "upvotes" => $upvotes,
+                "downvotes" => $downvotes,
+                "createdAt" => $poll->created_at,
+                "updatedAt" => $poll->updated_at,
+            ];
+
+            $convertedPolls[] = $convertedPoll;
+        }
+
+        return response()->json($convertedPolls);
     }
 }
