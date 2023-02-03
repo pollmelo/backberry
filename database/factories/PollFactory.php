@@ -19,10 +19,13 @@ class PollFactory extends Factory
      */
     public function definition()
     {
+        $randMinLength = rand(5, 15);
+        $randMaxLength = rand(20, 60);
+
         return [
-            'name' => fake()->realText(),
+            'name' => fake()->realTextBetween($randMinLength, $randMaxLength),
             'description' => fake()->realText(),
-            'end_date' => fake()->date(),
+            'end_date' => fake()->dateTimeBetween('-1 week', '+8 weeks'),
             'phase' => 1,
         ];
     }
