@@ -37,6 +37,7 @@ class PollController extends Controller
         return response()->json($poll, status: 201);
     }
 
+
     public function getPoll(Request $request, int $id): JsonResponse
     {
         $poll = Poll::find($id);
@@ -56,5 +57,33 @@ class PollController extends Controller
             "updatedAt" => $poll->updated_at,
         ];
         return response()->json($convertedPoll, status: 200);
+    }
+
+    public function getAll(): JsonResponse
+    {
+        $polls = Poll::all();
+        $convertedPolls = [];
+
+        foreach ($polls as $poll) {
+            $votes = $poll->votes();
+            $upvotes = $votes->where('description', true)->count();
+            $downvotes = $votes->where('description', false)->count();
+
+            $convertedPoll = [
+                "id" => $poll->id,
+                "name" => $poll->name,
+                "description" => $poll->description,
+                "endDate" => $poll->end_date,
+                "phase" => $poll->phase,
+                "upvotes" => $upvotes,
+                "downvotes" => $downvotes,
+                "createdAt" => $poll->created_at,
+                "updatedAt" => $poll->updated_at,
+            ];
+
+            $convertedPolls[] = $convertedPoll;
+        }
+
+        return response()->json($convertedPolls);
     }
 }
