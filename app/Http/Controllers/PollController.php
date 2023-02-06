@@ -56,13 +56,14 @@ class PollController extends Controller
             "createdAt" => $poll->created_at,
             "updatedAt" => $poll->updated_at,
         ];
-        
+
         return response()->json($convertedPoll, status: 200);
     }
 
-    public function getAll(): JsonResponse
+    public function getAll(Request $request): JsonResponse
     {
-        $polls = Poll::all();
+        $limit = $request->input("limit");
+        $polls = Poll::limit($limit)->get();
         $convertedPolls = [];
 
         foreach ($polls as $poll) {
@@ -84,7 +85,6 @@ class PollController extends Controller
 
             $convertedPolls[] = $convertedPoll;
         }
-
         return response()->json($convertedPolls);
     }
 }
