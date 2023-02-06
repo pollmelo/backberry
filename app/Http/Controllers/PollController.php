@@ -41,19 +41,20 @@ class PollController extends Controller
     {
         $poll = Poll::find($id);
         $votes = $poll->votes()->get();
-        $upvotes = 0;
-        $downvotes = 0;
-        foreach ($votes as $value) {
-            if ($value->description == 0) {
-                $downvotes += 1;
-            }
+        $upvotes = $votes->where('description', true)->count();
+        $downvotes = $votes->where('description', false)->count();
 
-            if ($value->description == 1) {
-                $upvotes += 1;
-            }
-            unset($value); 
-        }
-
-        return response()->json([$poll, $upvotes, $downvotes], status: 200);
+        $convertedPoll = [
+            "id" => $poll->id,
+            "name" => $poll->name,
+            "description" => $poll->description,
+            "endDate" => $poll->end_date,
+            "phase" => $poll->phase,
+            "upvotes" => $upvotes,
+            "downvotes" => $downvotes,
+            "createdAt" => $poll->created_at,
+            "updatedAt" => $poll->updated_at,
+        ];
+        return response()->json($convertedPoll, status: 200);
     }
 }
