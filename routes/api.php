@@ -17,10 +17,12 @@ use Illuminate\Support\Facades\Route;
 
 Route::prefix('polls')->group(function () {
     Route::post('/create', [PollController::class, 'create']);
+    
+    Route::get('/all', [PollController::class, 'getAll']);
 
     Route::get('/{id}', [PollController::class, 'getPoll']);
 
-    Route::get('/all', [PollController::class, 'getAll']);
+
 
 });
 

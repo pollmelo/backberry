@@ -56,6 +56,7 @@ class PollController extends Controller
             "createdAt" => $poll->created_at,
             "updatedAt" => $poll->updated_at,
         ];
+        
         return response()->json($convertedPoll, status: 200);
     }
 
