@@ -2,6 +2,8 @@
 
 namespace App\DTOs\HttpApi;
 
+use DateTime;
+
 readonly class PollDataTransferObject
 {
     public int $id;
@@ -11,18 +13,19 @@ readonly class PollDataTransferObject
     public int $phase;
     public int $upvotes;
     public int $downvotes;
-    public DateTime $createdAt;
-    public DateTime $updatedAt;
+    public DateTime $created_at;
+    public DateTime $updated_at;
 
-    function __construct(int $id, string $name, string $description, int $phase, int $upvotes, int $downvotes, DateTime $createdAt, DateTime $updatedAt)
+    function __construct(int $id, string $name, string $description, DateTime $endDate, int $phase, int $upvotes, int $downvotes, DateTime $created_at, DateTime $updated_at)
     {
         $this->id = $id;
         $this->name = $name;
         $this->description = $description;
+        $this->endDate = $endDate;
         $this->phase = $phase;
         $this->upvotes = $upvotes;
         $this->downvotes = $downvotes;
-        $this->createdAt = $createdAt;
-        $this->updatedAt = $updatedAt;
+        $this->created_at = $created_at;
+        $this->updated_at = $updated_at;
     }
 }
