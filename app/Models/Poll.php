@@ -13,6 +13,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property string $description
  * @property DateTime $end_date
  * @property int $phase
+ * @property DateTime $created_at
+ * @property DateTime $updated_at
  */
 class Poll extends Model
 {
