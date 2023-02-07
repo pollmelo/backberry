@@ -62,7 +62,7 @@ class PollController extends Controller
     public function getAll(Request $request): JsonResponse
     {
         $limit = $request->input("limit");
-        $polls =$limit==null? Poll::all() : Poll::limit($limit)->get();
+        $polls = is_null($limit) ? Poll::all() : Poll::limit($limit)->get();
         $convertedPolls = [];
 
         foreach ($polls as $poll) {
