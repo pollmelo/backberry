@@ -9,7 +9,7 @@ use App\Models\Poll;
 
 class PollDataTransferObjectConverter
 {
-    public function convert(Poll $poll, int $upvotes, int $downvotes)
+    public function convert(Poll $poll, int $upvotes, int $downvotes): PollDataTransferObject
     {
         $pollDataTransferObject = new PollDataTransferObject(
             $poll->id,
