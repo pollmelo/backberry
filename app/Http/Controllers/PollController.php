@@ -66,10 +66,9 @@ class PollController extends Controller
         $convertedPolls = [];
 
         foreach ($polls as $poll) {
-            $votes = $poll->votes();
+            $votes = $poll->votes()->get();
             $upvotes = $votes->where('description', true)->count();
             $downvotes = $votes->where('description', false)->count();
-
             $convertedPoll = [
                 "id" => $poll->id,
                 "name" => $poll->name,
@@ -81,9 +80,10 @@ class PollController extends Controller
                 "createdAt" => $poll->created_at,
                 "updatedAt" => $poll->updated_at,
             ];
-
+            
             $convertedPolls[] = $convertedPoll;
         }
+
         return response()->json($convertedPolls);
     }
 }
