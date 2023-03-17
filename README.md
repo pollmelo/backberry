@@ -1,3 +1,6 @@
+# Prerequisites
+Docker Desktop needs to be installed and running.
+
 # ddev Commands
 After cloning the repository copy .env.example and rename this copy to .env
 To start the docker containers use:
