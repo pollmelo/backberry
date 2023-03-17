@@ -1,6 +1,7 @@
 <?php
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\PollController;
+use App\Http\Controllers\VoteController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,6 +15,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::prefix('polls')->group(function () {
+    Route::post('/create', [PollController::class, 'create']);
+
+    Route::get('/all', [PollController::class, 'getAll']);
+
+    Route::get('/{id}', [PollController::class, 'getPoll']);  
+});
+
+Route::prefix('votes')->group(function () {
+    Route::post('/create', [VoteController::class, 'create'])->name('votes.create');
 });
